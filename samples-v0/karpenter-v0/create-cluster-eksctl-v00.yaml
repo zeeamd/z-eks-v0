@@ -1,0 +1,74 @@
+eksctl create cluster -f - <<EOF
+---
+apiVersion: eksctl.io/v1alpha5
+kind: ClusterConfig
+metadata:
+  name: ${CLUSTER_NAME}
+  region: ${AWS_DEFAULT_REGION}
+  version: "${K8S_VERSION}"
+  tags:
+    karpenter.sh/discovery: ${CLUSTER_NAME}
+
+# custom private cluster
+# privateCluster:
+#   enabled: true
+#   skipEndpointCreation: true
+#   additionalEndpointServices:
+#   - "autoscaling"
+#   - "cloudformation"
+#   - "logs"
+
+# custom vpc
+# vpc:
+#   subnets:
+#     private:
+#       us-east-1a:
+#         id: subnet-0fed511292ec4e258
+#       us-east-1b:
+#         id: subnet-04cf507ab918687c5
+  # ClusterSharedNodeSecurityGroup - sharedNodeSecurityGroup: - Communication between all nodes in the cluster
+  # ControlPlaneSecurityGroup - securityGroup: - Communication between the control plane and worker nodegroups
+  # eks-cluster-sg-eksv0-96577479 - EKS created security group applied to ENI that is attached to EKS Control Plane master nodes, as well as any managed workloads
+
+iam:
+  withOIDC: true
+  podIdentityAssociations:
+  - namespace: "${KARPENTER_NAMESPACE}"
+    serviceAccountName: karpenter
+    roleName: ${CLUSTER_NAME}-karpenter
+    permissionPolicyARNs:
+    - arn:${AWS_PARTITION}:iam::${AWS_ACCOUNT_ID}:policy/KarpenterControllerPolicy-${CLUSTER_NAME}
+
+iamIdentityMappings:
+- arn: "arn:${AWS_PARTITION}:iam::${AWS_ACCOUNT_ID}:role/KarpenterNodeRole-${CLUSTER_NAME}"
+  username: system:node:{{EC2PrivateDNSName}}
+  groups:
+  - system:bootstrappers
+  - system:nodes
+
+managedNodeGroups:
+- instanceType: m5.large
+  amiFamily: AmazonLinux2
+  name: ${CLUSTER_NAME}-ng
+  desiredCapacity: 2
+  minSize: 1
+  maxSize: 5
+  # custom subnets
+  # subnets: ['subnet-0fed511292ec4e258','subnet-04cf507ab918687c5']
+  # custom encrypt vol
+  volumeEncrypted: true
+  # enable private n/w
+  privateNetworking: true
+
+addons:
+- name: eks-pod-identity-agent
+EOF
+
+# https://eksctl.io/usage/vpc-configuration/ 
+# use above link to identify private subnets and enable private n/w for nodes
+
+# https://eksctl.io/usage/vpc-networking/#use-existing-vpc-other-custom-configuration
+
+# https://eksctl.io/usage/eks-private-cluster/
+
+# https://eksctl.io/usage/schema/

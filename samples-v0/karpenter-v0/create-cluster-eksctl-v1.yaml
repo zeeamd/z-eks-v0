@@ -1,0 +1,85 @@
+# Cannot connect to private cluster
+# Could not deploy karpenter to it
+
+# curl -fsSL https://raw.githubusercontent.com/aws/karpenter-provider-aws/v"${KARPENTER_VERSION}"/website/content/en/preview/getting-started/getting-started-with-karpenter/cloudformation.yaml  > "${TEMPOUT}" \
+# && aws cloudformation deploy \
+#   --stack-name "Karpenter-${CLUSTER_NAME}" \
+#   --template-file "${TEMPOUT}" \
+#   --capabilities CAPABILITY_NAMED_IAM \
+#   --parameter-overrides "ClusterName=${CLUSTER_NAME}"
+
+eksctl create cluster -f - <<EOF
+---
+apiVersion: eksctl.io/v1alpha5
+kind: ClusterConfig
+metadata:
+  name: ${CLUSTER_NAME}
+  region: ${AWS_DEFAULT_REGION}
+  version: "${K8S_VERSION}"
+  tags:
+    karpenter.sh/discovery: ${CLUSTER_NAME}
+
+# custom private cluster
+privateCluster:
+  enabled: true
+  additionalEndpointServices:
+  - "autoscaling"
+  - "cloudformation"
+  - "logs"
+
+# custom vpc
+# vpc:
+#   id: vpc-00393b83c5f202424
+  # subnets:
+  #   private:
+  #     us-east-1a:
+  #       id: subnet-081ebd1420aaff291
+  #     us-east-1b:
+  #       id: subnet-09e80a0a48070acfc
+  # securityGroup: sg-03babcbd8f1a6276c
+  # sharedNodeSecurityGroup: sg-00cbfc55c81647e27
+
+iam:
+  withOIDC: true
+  podIdentityAssociations:
+  - namespace: "${KARPENTER_NAMESPACE}"
+    serviceAccountName: karpenter
+    roleName: ${CLUSTER_NAME}-karpenter
+    permissionPolicyARNs:
+    - arn:${AWS_PARTITION}:iam::${AWS_ACCOUNT_ID}:policy/KarpenterControllerPolicy-${CLUSTER_NAME}
+
+iamIdentityMappings:
+- arn: "arn:${AWS_PARTITION}:iam::${AWS_ACCOUNT_ID}:role/KarpenterNodeRole-${CLUSTER_NAME}"
+  username: system:node:{{EC2PrivateDNSName}}
+  groups:
+  - system:bootstrappers
+  - system:nodes
+  ## If you intend to run Windows workloads, the kube-proxy group should be specified.
+  # For more information, see https://github.com/aws/karpenter/issues/5099.
+  # - eks:kube-proxy-windows
+
+managedNodeGroups:
+- instanceType: m5.large
+  amiFamily: AmazonLinux2
+  name: ${CLUSTER_NAME}-ng
+  desiredCapacity: 2
+  minSize: 1
+  maxSize: 5
+  # custom encrypt vol
+  volumeEncrypted: true
+  # enable private n/w
+  privateNetworking: true
+
+addons:
+- name: eks-pod-identity-agent
+EOF
+
+# export CLUSTER_ENDPOINT="$(aws eks describe-cluster --name "${CLUSTER_NAME}" --query "cluster.endpoint" --output text)"
+# export KARPENTER_IAM_ROLE_ARN="arn:${AWS_PARTITION}:iam::${AWS_ACCOUNT_ID}:role/${CLUSTER_NAME}-karpenter"
+
+# echo "${CLUSTER_ENDPOINT} ${KARPENTER_IAM_ROLE_ARN}"
+
+# other endpoints to create maybe
+# aws ec2 create-vpc-endpoint --vpc-id vpc-0b2f73628fb484a27 --service-name com.amazonaws.us-east-1.ssm --vpc-endpoint-type Interface --subnet-ids subnet-081ebd1420aaff291 subnet-09e80a0a48070acfc --security-group-ids sg-00cbfc55c81647e27
+# aws ec2 create-vpc-endpoint --vpc-id vpc-07dc651124559b4aa --service-name com.amazonaws.us-east-1.sqs --vpc-endpoint-type Interface --subnet-ids subnet-040c94dd256a8bda5 subnet-0877ff042b85de56c subnet-0b39a74d943bb84c4 --security-group-ids sg-0dafc7a7104d34a65 sg-0822ef8d6f33e6993 sg-03644ec01db419caa sg-091af8a5732a0cf74
+# aws ec2 create-vpc-endpoint --vpc-id vpc-0b2f73628fb484a27 --service-name com.amazonaws.us-east-1.eks --vpc-endpoint-type Interface --subnet-ids subnet-081ebd1420aaff291 subnet-09e80a0a48070acfc --security-group-ids sg-00cbfc55c81647e27

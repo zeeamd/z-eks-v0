@@ -1,0 +1,17 @@
+apiVersion: keda.sh/v1alpha1
+kind: ScaledObject
+metadata:
+  name: aws-sqs-queue-scaledobject
+  # namespace: keda-test
+spec:
+  scaleTargetRef:
+    name: nginx-deployment
+  triggers:
+  - type: aws-sqs-queue
+    authenticationRef:
+      name: keda-trigger-auth-aws-credentials
+    metadata:
+      queueURL: keda-trigger-test-v0
+      queueLength: "1"
+      awsRegion: "us-east-1"
+      scaleOnInFlight: 'false'

@@ -1,0 +1,47 @@
+apiVersion: security.istio.io/v1beta1
+kind: PeerAuthentication
+metadata:
+  name: default
+  namespace: istio-system
+spec:   
+  mtls:
+    mode: STRICT
+
+# https://discuss.istio.io/t/server-must-have-tls-settings-for-https-tls-protocols/6413
+# https://discuss.istio.io/t/tls-termination-at-ingress-edge-for-https-only/5646
+# --- 
+# apiVersion: security.istio.io/v1beta1
+# kind: PeerAuthentication
+# metadata:
+#   name: ecommerce
+#   namespace: ecommerce
+# spec:  
+#   mtls:
+#     mode: STRICT
+# ---
+# apiVersion: security.istio.io/v1beta1
+# kind: PeerAuthentication
+# metadata:
+#   name: ecommerce
+#   namespace: ecommerce
+# spec:
+#   selector:
+#     matchLabels:
+#       workload: ecommerce     
+#   mtls:
+#     mode: STRICT
+# --- 
+# apiVersion: security.istio.io/v1beta1
+# kind: PeerAuthentication
+# metadata:
+#   name: products-permissive
+#   namespace: ecommerce
+# spec:
+#   selector:
+#     matchLabels:
+#       app: products     
+#   mtls:
+#     mode: PERMISSIVE
+
+
+# https://antonputra.com/kubernetes/add-iam-user-and-iam-role-to-eks/#add-iam-role-to-eks-cluster
