@@ -23,3 +23,42 @@ kubectl get events --sort-by='.lastTimestamp'
 # worker node needs sqs read access for scaled object (identityOwnwer: Operator)
 Warning   KEDAScalerFailed               scaledobject/aws-sqs-queue-scaledobject-inflate                       (combined from similar events): operation error SQS: GetQueueAttributes, https response error StatusCode: 403, RequestID: 5c03abf7-14e0-5c0d-accc-f4a46ba98c1c, api error AccessDenied: User: arn:aws:sts::637423611293:assumed-role/eksctl-zeks0-nodegroup-zeks0-ng-NodeInstanceRole-v53OjH8KaIXl/i-0adec52695b3c98b6 is not authorized to perform: sqs:getqueueattributes on resource: arn:aws:sqs:us-east-1:637423611293:keda-trigger-test-v0 because no identity-based policy allows the sqs:getqueueattributes action
 
+# create ns and setup istioctl
+# install base
+helm install -n istio-system istio-base istio-1.23.0/manifests/charts/base
+helm status istio-base -n istio-system
+helm get all istio-base -n istio-system
+
+# innstall istiod
+helm install -n istio-system istiod istio-1.23.0/manifests/charts/istio-control/istio-discovery
+helm status istiod -n istio-system
+helm get all istiod -n istio-system
+
+Next steps:
+  * Deploy a Gateway: https://istio.io/latest/docs/setup/additional-setup/gateway/
+  * Try out our tasks to get started on common configurations:
+    * https://istio.io/latest/docs/tasks/traffic-management
+    * https://istio.io/latest/docs/tasks/security/
+    * https://istio.io/latest/docs/tasks/policy-enforcement/
+  * Review the list of actively supported releases, CVE publications and our hardening guide:
+    * https://istio.io/latest/docs/releases/supported-releases/
+    * https://istio.io/latest/news/security/
+    * https://istio.io/latest/docs/ops/best-practices/security/
+
+# install ingress
+helm install -n istio-system istio-ingress istio-1.23.0/manifests/charts/gateways/istio-ingress
+helm uninstall -n istio-system istio-ingress
+
+https://github.com/istio/istio/releases
+https://kubernetes-sigs.github.io/aws-load-balancer-controller/v2.2/guide/service/annotations/
+
+# list istio components
+helm list -aq -n istio-system
+
+# enable ns for istio
+kubectl label namespace default istio-injection=enabled
+
+# enable telemetry for logs
+# view logs
+kubectl logs -l app=sleep -c istio-proxy
+kubectl logs istio-ingressgateway-5f766c695f-x2tph -c istio-proxy -n istio-system
