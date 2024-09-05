@@ -62,3 +62,11 @@ kubectl label namespace default istio-injection=enabled
 # view logs
 kubectl logs -l app=sleep -c istio-proxy
 kubectl logs istio-ingressgateway-5f766c695f-x2tph -c istio-proxy -n istio-system
+
+# secrets
+kubectl create -n istio-system secret tls httpbin-tls-secret \
+  --key=private.key \
+  --cert=certificate.crt
+
+# check cert
+curl -v -H "Host: ctv0.in" https://a97cae6e285984974b88f467e21d1cdd-fe350cbc56846c88.elb.us-east-1.amazonaws.com/headers
