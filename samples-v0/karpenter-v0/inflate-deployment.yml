@@ -25,7 +25,6 @@ spec:
             cpu: 1
         securityContext:
           allowPrivilegeEscalation: false
-EOF
 
 # kubectl scale deployment inflate --replicas 5
 # kubectl logs -f -n "${KARPENTER_NAMESPACE}" -l app.kubernetes.io/name=karpenter -c controller
