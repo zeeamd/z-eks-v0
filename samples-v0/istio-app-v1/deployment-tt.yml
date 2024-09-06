@@ -1,0 +1,18 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: ttdeployment
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: tt
+  template:
+    metadata:
+      labels:
+        app: tt
+    spec:
+      containers:
+      - image: richardjkendall/curl-bash
+        imagePullPolicy: IfNotPresent
+        name: tt

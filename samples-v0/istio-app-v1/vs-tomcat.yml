@@ -1,0 +1,19 @@
+apiVersion: networking.istio.io/v1alpha3
+kind: VirtualService
+metadata:
+  name: totomcat
+spec:
+  gateways:
+  - mesh
+  hosts:
+  - tomcat-service.default.svc.cluster.local
+  http:
+  - name: match-from-service
+    match:
+    - sourceLabels:
+        service: from-service
+    route:
+    - destination:
+        port:
+          number: 8080
+        host: tomcat
