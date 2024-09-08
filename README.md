@@ -70,3 +70,9 @@ kubectl create -n istio-system secret tls httpbin-tls-secret \
 
 # check cert
 curl -v -H "Host: ctv0.in" https://a97cae6e285984974b88f467e21d1cdd-fe350cbc56846c88.elb.us-east-1.amazonaws.com/headers
+
+# kubectl cmds samples
+kubectl attach curl-deployment-7b8f7879bc-knmq8 -c curl-container -i -t
+kubectl exec curl-deployment-7b8f7879bc-knmq8 -c curl-container -- curl https://8.8.8.8
+kubectl exec s-nginx-deployment-6d9bfc7997-b4rzp -c snginx-container -- curl http://d-tomcat-service.default.svc.cluster.local:8080
+kubectl logs d-tomcat-deployment-78879cdd6d-dk5ws -c istio-proxy

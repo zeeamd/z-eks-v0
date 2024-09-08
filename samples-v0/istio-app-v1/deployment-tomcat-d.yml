@@ -1,19 +1,19 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: tomcat-deployment
+  name: d-tomcat-deployment
 spec:
   replicas: 1
   selector:
     matchLabels:
-      app: tomcat
+      app: dtomcat
   template:
     metadata:
       labels:
-        app: tomcat
+        app: dtomcat
     spec:
       containers:
-        - name: tomcat-container
+        - name: dtomcat-container
           image: gcr.io/kodekloud/centos-ssh-enabled:tomcat
           ports:
             - containerPort: 8080
