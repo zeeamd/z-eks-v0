@@ -60,6 +60,9 @@ https://github.com/istio/istio/releases
 #
 https://kubernetes-sigs.github.io/aws-load-balancer-controller/v2.2/guide/service/annotations/
 
+# istio security
+https://medium.com/@m.allandhir/understanding-istio-authentication-policy-aa17e84112bf
+
 # list istio components
 helm list -aq -n istio-system
 
@@ -90,3 +93,5 @@ kubectl exec curl-deployment-7b8f7879bc-knmq8 -c curl-container -- curl https://
 kubectl exec s-nginx-deployment-6d9bfc7997-b4rzp -c snginx-container -- curl http://d-tomcat-service.default.svc.cluster.local:8080
 #
 kubectl logs d-tomcat-deployment-78879cdd6d-dk5ws -c istio-proxy
+#
+istioctl proxy-status
