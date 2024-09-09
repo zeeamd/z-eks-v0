@@ -101,3 +101,5 @@ kubectl exec s-nginx-deployment-6d9bfc7997-b4rzp -c snginx-container -- curl d-t
 kubectl logs d-tomcat-deployment-78879cdd6d-dk5ws -c istio-proxy
 #
 istioctl proxy-status
+#
+kubectl auth can-i create ns
