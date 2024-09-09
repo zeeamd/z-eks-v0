@@ -62,6 +62,12 @@ https://kubernetes-sigs.github.io/aws-load-balancer-controller/v2.2/guide/servic
 
 # istio security
 https://medium.com/@m.allandhir/understanding-istio-authentication-policy-aa17e84112bf
+#
+https://discuss.istio.io/t/verifying-mtls-between-services/5539/2
+#
+https://istio.io/latest/docs/ambient/usage/verify-mtls-enabled/
+#
+istioctl x describe pod d-tomcat-deployment-78879cdd6d-dk5ws
 
 # list istio components
 helm list -aq -n istio-system
@@ -90,7 +96,7 @@ kubectl attach curl-deployment-7b8f7879bc-knmq8 -c curl-container -i -t
 #
 kubectl exec curl-deployment-7b8f7879bc-knmq8 -c curl-container -- curl https://8.8.8.8
 #
-kubectl exec s-nginx-deployment-6d9bfc7997-b4rzp -c snginx-container -- curl http://d-tomcat-service.default.svc.cluster.local:8080
+kubectl exec s-nginx-deployment-6d9bfc7997-b4rzp -c snginx-container -- curl d-tomcat-service.default.svc.cluster.local:8080
 #
 kubectl logs d-tomcat-deployment-78879cdd6d-dk5ws -c istio-proxy
 #
