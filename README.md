@@ -117,3 +117,8 @@ kubectl logs d-tomcat-deployment-78879cdd6d-dk5ws -c istio-proxy
 istioctl proxy-status
 #
 kubectl auth can-i create ns
+
+# fluent bit
+https://docs.fluentbit.io/manual/installation/kubernetes
+#
+helm upgrade -f values.yaml fluent-bit . --version 1 -n fb
