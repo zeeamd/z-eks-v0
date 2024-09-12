@@ -91,6 +91,20 @@ curl -v -H "Host: ctv0.in" https://a97cae6e285984974b88f467e21d1cdd-fe350cbc5684
 # print status
 kubectl exec s-nginx-deployment-6d9bfc7997-b4rzp -c snginx-container -- curl -I http://d-tomcat-service.default.svc.cluster.local:8080
 
+# permission
+https://stackoverflow.com/questions/70787520/your-current-user-or-role-does-not-have-access-to-kubernetes-objects-on-this-eks
+#
+kubectl edit configmap aws-auth -n kube-system
+#
+kubectl describe configmaps aws-auth -n kube-system
+#
+kubectl get configmaps aws-auth -n kube-system -o yaml
+#
+mapUsers: |
+    - userarn: arn:aws:iam::[accountId]:user/[username]
+      groups:
+      - system:masters
+
 # kubectl cmds samples
 kubectl attach curl-deployment-7b8f7879bc-knmq8 -c curl-container -i -t
 #
