@@ -121,4 +121,6 @@ kubectl auth can-i create ns
 # fluent bit
 https://docs.fluentbit.io/manual/installation/kubernetes
 #
-helm upgrade -f values.yaml fluent-bit . --version 1 -n fb
+helm list -n fb
+#
+helm upgrade -f values.yaml fluent-bit . --version 4 -n fb

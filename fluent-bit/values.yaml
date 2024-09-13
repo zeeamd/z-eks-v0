@@ -407,19 +407,18 @@ config:
   ## https://docs.fluentbit.io/manual/pipeline/outputs
   outputs: |
     [OUTPUT]
-        Name es
-        Match kube.*
-        Host elasticsearch-master
-        Logstash_Format On
-        Retry_Limit False
-
-    [OUTPUT]
-        Name es
-        Match host.*
-        Host elasticsearch-master
+        Name  opensearch
+        Match *
+        Host  search-eksv0-riqo77djhsibvhqdchhyk5tqxy.us-east-1.es.amazonaws.com
+        Port  443
+        Index eksv0
+        tls     On
+        HTTP_User esu
+        HTTP_Passwd Password#1
         Logstash_Format On
         Logstash_Prefix node
         Retry_Limit False
+        Suppress_Type_Name On
 
   ## https://docs.fluentbit.io/manual/administration/configuring-fluent-bit/classic-mode/upstream-servers
   ## This configuration is deprecated, please use `extraFiles` instead.
