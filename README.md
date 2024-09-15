@@ -3,6 +3,7 @@
 # AWS EKS setup
 
 # Karpenter - Node scaling
+ensure new nodes coming up have right sg attached or atleast right rules else health check may fail on ingress lb
 
 # Keda - Pod scaling
 
