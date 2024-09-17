@@ -69,7 +69,6 @@ defaults:
           service.beta.kubernetes.io/aws-load-balancer-backend-protocol: "tcp"
           service.beta.kubernetes.io/aws-load-balancer-ssl-ports: "https"
           service.beta.kubernetes.io/aws-load-balancer-ssl-cert: "arn:aws:acm:us-east-1:637423611293:certificate/399238dc-18fc-4ed9-99d7-b3d2bb136025"
-          #service.beta.kubernetes.io/load-balancer-source-ranges:  "0.0.0.0/0"
 
       podAnnotations: {}
       type: LoadBalancer #change to NodePort, ClusterIP or LoadBalancer if need be

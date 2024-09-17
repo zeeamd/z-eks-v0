@@ -1,0 +1,14 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: httpbins
+  labels:
+    app: httpbin
+    service: httpbins
+spec:
+  ports:
+  - name: http
+    port: 8000
+    targetPort: 8080
+  selector:
+    app: httpbin

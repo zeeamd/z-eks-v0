@@ -34,7 +34,7 @@ helm status istio-base -n istio-system
 #
 helm get all istio-base -n istio-system
 
-# innstall istiod
+# install istiod
 helm install -n istio-system istiod istio-1.23.0/manifests/charts/istio-control/istio-discovery
 #
 helm status istiod -n istio-system
