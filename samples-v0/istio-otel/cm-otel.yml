@@ -17,13 +17,13 @@ data:
     processors:
       batch:
     exporters:
-      zipkin:
+      #zipkin:
         # Export to zipkin for easy querying
-        endpoint: http://zipkin.istio-system.svc:9411/api/v2/spans
+      #  endpoint: http://zipkin.istio-system.svc:9411/api/v2/spans
       logging:
         loglevel: debug
       jaeger:
-        endpoint: 44.220.51.153:14250
+        endpoint: 192.168.4.91:14250
         tls:
           insecure: true
         sending_queue:
@@ -46,6 +46,6 @@ data:
           - otlp
           - opencensus
           exporters:
-          - zipkin
+          #- zipkin
           - logging
           - jaeger
