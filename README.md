@@ -125,3 +125,6 @@ https://docs.fluentbit.io/manual/installation/kubernetes
 helm list -n fb
 #
 helm upgrade -f values.yaml fluent-bit . --version 4 -n fb
+
+# rollout deployment
+kubectl rollout restart deployment/opentelemetry-collector -n otel
