@@ -1,0 +1,38 @@
+apiVersion: eksctl.io/v1alpha5
+kind: ClusterConfig
+
+metadata:
+  name: eksv1
+  region: us-east-1
+
+vpc:
+  subnets:
+    public:
+      us-east-1a: { id: subnet-0b6ca43e15adb1439 }
+      us-east-1b: { id: subnet-002f802198a31e9de }
+    private:
+      us-east-1a: { id: subnet-05d55fe7454c8e228 }
+      us-east-1b: { id: subnet-070d884d25098716b }
+      
+
+managedNodeGroups:
+  - name: eksv1-ng-1
+    labels: { role: workers }
+    instanceType: m5.xlarge
+    desiredCapacity: 1
+    minSize: 0
+    maxSize: 5
+    privateNetworking: true
+    volumeEncrypted: true
+    ssh:
+      allow: true
+      publicKeyName: zk0
+    subnets: ["subnet-05d55fe7454c8e228","subnet-070d884d25098716b"]
+    
+cloudWatch:
+  clusterLogging:
+    enableTypes: ["all"]
+    logRetentionInDays: 1
+
+# eksctl create cluster -f eks-cluster.yml
+# eksctl delete cluster -f eks-cluster.yml

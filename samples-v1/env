@@ -1,0 +1,14 @@
+export KARPENTER_NAMESPACE=karpenter
+export CLUSTER_NAME=eksv1
+export AWS_PARTITION="aws"
+export AWS_REGION="$(aws configure list | grep region | tr -s " " | cut -d" " -f3)"
+export OIDC_ENDPOINT="$(aws eks describe-cluster --name "${CLUSTER_NAME}" \
+    --query "cluster.identity.oidc.issuer" --output text)"
+export AWS_ACCOUNT_ID=$(aws sts get-caller-identity --query 'Account' \
+    --output text)
+export K8S_VERSION=1.30
+export ARM_AMI_ID="$(aws ssm get-parameter --name /aws/service/eks/optimized-ami/${K8S_VERSION}/amazon-linux-2-arm64/recommended/image_id --query Parameter.Value --output text)"
+export AMD_AMI_ID="$(aws ssm get-parameter --name /aws/service/eks/optimized-ami/${K8S_VERSION}/amazon-linux-2/recommended/image_id --query Parameter.Value --output text)"
+export GPU_AMI_ID="$(aws ssm get-parameter --name /aws/service/eks/optimized-ami/${K8S_VERSION}/amazon-linux-2-gpu/recommended/image_id --query Parameter.Value --output text)"
+
+echo "${KARPENTER_NAMESPACE}" "${KARPENTER_VERSION}" "${K8S_VERSION}" "${CLUSTER_NAME}" "${AWS_REGION}" "${AWS_ACCOUNT_ID}" "${ARM_AMI_ID}" "${AMD_AMI_ID}" "${GPU_AMI_ID}" "${OIDC_ENDPOINT}"
