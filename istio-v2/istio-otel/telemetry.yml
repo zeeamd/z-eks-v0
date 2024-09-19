@@ -8,6 +8,6 @@ spec:
     - name: otel-tracing
     randomSamplingPercentage: 100
     customTags:
-      test_tag:
+      cluster_nm:
         literal:
-          value: "eksv0"
+          value: "eksv1"
