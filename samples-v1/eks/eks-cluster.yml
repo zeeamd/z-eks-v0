@@ -36,3 +36,4 @@ cloudWatch:
 
 # eksctl create cluster -f eks-cluster.yml
 # eksctl delete cluster -f eks-cluster.yml
+# ensure OIDC exists for cluster

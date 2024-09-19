@@ -10,5 +10,6 @@ export K8S_VERSION=1.30
 export ARM_AMI_ID="$(aws ssm get-parameter --name /aws/service/eks/optimized-ami/${K8S_VERSION}/amazon-linux-2-arm64/recommended/image_id --query Parameter.Value --output text)"
 export AMD_AMI_ID="$(aws ssm get-parameter --name /aws/service/eks/optimized-ami/${K8S_VERSION}/amazon-linux-2/recommended/image_id --query Parameter.Value --output text)"
 export GPU_AMI_ID="$(aws ssm get-parameter --name /aws/service/eks/optimized-ami/${K8S_VERSION}/amazon-linux-2-gpu/recommended/image_id --query Parameter.Value --output text)"
+export KARPENTER_VERSION="0.37.0"
 
-echo "${KARPENTER_NAMESPACE}" "${KARPENTER_VERSION}" "${K8S_VERSION}" "${CLUSTER_NAME}" "${AWS_REGION}" "${AWS_ACCOUNT_ID}" "${ARM_AMI_ID}" "${AMD_AMI_ID}" "${GPU_AMI_ID}" "${OIDC_ENDPOINT}"
+echo "${KARPENTER_NAMESPACE}" "${KARPENTER_VERSION}" "${K8S_VERSION}" "${CLUSTER_NAME}" "${AWS_REGION}" "${AWS_ACCOUNT_ID}" "${ARM_AMI_ID}" "${AMD_AMI_ID}" "${GPU_AMI_ID}" "${OIDC_ENDPOINT}" "${KARPENTER_VERSION}"
