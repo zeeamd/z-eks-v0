@@ -64,3 +64,6 @@ helm install -n istio-ingress istio-ingress istio-1.23.0/manifests/charts/gatewa
 
 # cleanup istio all
 istioctl uninstall --purge
+
+# installation methods
+https://istio.io/latest/about/faq/#install-method-selection
