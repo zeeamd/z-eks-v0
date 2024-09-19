@@ -23,7 +23,7 @@ data:
       logging:
         loglevel: debug
       jaeger:
-        endpoint: 192.168.4.91:14250
+        endpoint: 192.168.249.142:14250
         tls:
           insecure: true
         sending_queue:
