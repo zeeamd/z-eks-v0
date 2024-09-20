@@ -22,10 +22,14 @@ data:
       #  endpoint: http://zipkin.istio-system.svc:9411/api/v2/spans
       logging:
         loglevel: debug
-      otlphttp:
-        endpoint: https://lgp38977.live.dynatrace.com/api/v2/otlp
-        headers:
-          Authorization: "Api-Token dt0c01.O2D4FRTQA6ZPE5RWV5EQDQE4.GGIMRNJ6RPHO2YTLL6RC6E7NUO6LNVEMETWHQK3FOOYO6EDTM4EYWY655LQDU2KL"
+      jaeger:
+        endpoint: 192.168.249.142:14250
+        tls:
+          insecure: true
+        sending_queue:
+          enabled: true
+        retry_on_failure:
+          enabled: true
     extensions:
       health_check:
         port: 13133
@@ -42,5 +46,6 @@ data:
           - otlp
           - opencensus
           exporters:
+          #- zipkin
           - logging
-          - otlphttp
+          - jaeger

@@ -381,10 +381,18 @@ config:
   ## https://docs.fluentbit.io/manual/pipeline/inputs
   inputs: |
     [INPUT]
-        name opentelemetry
-        listen 0.0.0.0
-        port 4318
-        tag otel.eksv1
+        Name tail
+        Path /var/log/containers/*.log
+        multiline.parser docker, cri
+        Tag kube.*
+        Mem_Buf_Limit 5MB
+        Skip_Long_Lines On
+
+    [INPUT]
+        Name systemd
+        Tag host.*
+        Systemd_Filter _SYSTEMD_UNIT=kubelet.service
+        Read_From_Tail On
 
   ## https://docs.fluentbit.io/manual/pipeline/filters
   filters: |
@@ -399,18 +407,19 @@ config:
   ## https://docs.fluentbit.io/manual/pipeline/outputs
   outputs: |
     [OUTPUT]
-        Name opentelemetry
-        Host lgp38977.live.dynatrace.com
-        Port  443
-        Match otel.*
-        Metrics_uri  /api/v2/otlp/v1/metrics
-        Traces_uri  /api/v2/otlp/v1/traces
-        Logs_uri   /api/v2/otlp/v1/logs
-        Log_response_payload True
-        Tls On
-        Tls.verify Off
+        name  http
+        match *
+        header Content-Type application/json; charset=utf-8
         header Authorization Api-Token dt0c01.O2D4FRTQA6ZPE5RWV5EQDQE4.GGIMRNJ6RPHO2YTLL6RC6E7NUO6LNVEMETWHQK3FOOYO6EDTM4EYWY655LQDU2KL
-        header Content-type application/x-protobuf
+        allow_duplicated_headers false
+        host  lgp38977.live.dynatrace.com
+        Port  443
+        URI   /api/v2/logs/ingest
+        Format json
+        json_date_format iso8601
+        json_date_key timestamp
+        tls On
+        tls.verify On
 
   ## https://docs.fluentbit.io/manual/administration/configuring-fluent-bit/classic-mode/upstream-servers
   ## This configuration is deprecated, please use `extraFiles` instead.

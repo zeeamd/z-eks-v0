@@ -25,3 +25,9 @@ exporters:
 https://opentelemetry.io/docs/collector/configuration/
 #
 https://opentelemetry.io/docs/specs/otel/protocol/exporter/
+#
+kubectl apply -f cm-observability.yml
+#
+kubectl rollout restart deployment/opentelemetry-collector -n observabilit
+#
+Ingest OpenTelemetry Traces to Dynatrace etc.

@@ -131,3 +131,6 @@ kubectl rollout restart deployment/opentelemetry-collector -n otel
 
 # grafana setup
 https://medium.com/@sayalishewale12/setup-grafana-on-aws-ec2-instance-517d4e2bc5a2
+
+# prometheus setup
+https://www.cherryservers.com/blog/install-prometheus-ubuntu

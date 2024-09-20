@@ -55,3 +55,22 @@ Under the hood, the chart will:
 
 ### Note
 Remember to set the `script` attribute in the filter using `/fluent-bit/scripts/`, otherwise the file will not be found by fluent bit.
+
+#
+helm install fluent-bit . -n fb
+#
+NAME: fluent-bit
+LAST DEPLOYED: Fri Sep 20 08:45:24 2024
+NAMESPACE: fb
+STATUS: deployed
+REVISION: 1
+NOTES:
+Get Fluent Bit build information by running these commands:
+#
+export POD_NAME=$(kubectl get pods --namespace fb -l "app.kubernetes.io/name=fluent-bit,app.kubernetes.io/instance=fluent-bit" -o jsonpath="{.items[0].metadata.name}")
+#
+kubectl --namespace fb port-forward $POD_NAME 2020:2020
+#
+curl http://127.0.0.1:2020
+#
+https://github.com/isItObservable/fluentbitv2
