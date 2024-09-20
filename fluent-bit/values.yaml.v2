@@ -30,7 +30,7 @@ fullnameOverride: ""
 serviceAccount:
   create: true
   annotations: {}
-  name:
+  name: fbsa
 
 rbac:
   create: true
@@ -388,38 +388,30 @@ config:
         Mem_Buf_Limit 5MB
         Skip_Long_Lines On
 
-    [INPUT]
-        Name systemd
-        Tag host.*
-        Systemd_Filter _SYSTEMD_UNIT=kubelet.service
-        Read_From_Tail On
 
   ## https://docs.fluentbit.io/manual/pipeline/filters
   filters: |
     [FILTER]
-        Name kubernetes
-        Match kube.*
-        Merge_Log On
-        Keep_Log Off
-        K8S-Logging.Parser On
-        K8S-Logging.Exclude On
+        Name parser
+        Match apache
+        Key_Name log
+        Parser apache
 
   ## https://docs.fluentbit.io/manual/pipeline/outputs
   outputs: |
     [OUTPUT]
-        Name es
-        Match kube.*
-        Host elasticsearch-master
-        Logstash_Format On
-        Retry_Limit False
-
-    [OUTPUT]
-        Name es
-        Match host.*
-        Host elasticsearch-master
+        Name  opensearch
+        Match *
+        Host  search-eksv0-riqo77djhsibvhqdchhyk5tqxy.us-east-1.es.amazonaws.com
+        Port  443
+        Index eksv0
+        tls     On
+        HTTP_User esu
+        HTTP_Passwd Password#1
         Logstash_Format On
         Logstash_Prefix node
         Retry_Limit False
+        Suppress_Type_Name On
 
   ## https://docs.fluentbit.io/manual/administration/configuring-fluent-bit/classic-mode/upstream-servers
   ## This configuration is deprecated, please use `extraFiles` instead.
@@ -433,6 +425,13 @@ config:
         Time_Keep Off
         Time_Key time
         Time_Format %Y-%m-%dT%H:%M:%S.%L
+
+    [PARSER]
+        Name   apache
+        Format regex
+        Regex  ^(?<host>[^ ]*) [^ ]* (?<user>[^ ]*) \[(?<time>[^\]]*)\] "(?<method>\S+)(?: +(?<path>[^\"]*?)(?: +\S*)?)?" (?<code>[^ ]*) (?<size>[^ ]*)(?: "(?<referer>[^\"]*)" "(?<agent>[^\"]*)")?$
+        Time_Key time
+        Time_Format %d/%b/%Y:%H:%M:%S %z
 
   # This allows adding more files with arbitrary filenames to /fluent-bit/etc/conf by providing key/value pairs.
   # The key becomes the filename, the value becomes the file content.

@@ -55,10 +55,3 @@ Under the hood, the chart will:
 
 ### Note
 Remember to set the `script` attribute in the filter using `/fluent-bit/scripts/`, otherwise the file will not be found by fluent bit.
-
-#
-helm install fluent-bit . -n fb
-#
-https://medium.com/@rahul.bobadi/exporting-kubernetes-logs-to-elasticsearch-using-fluent-bit-3690c1888f4a
-#
-Port 2020 (sg)

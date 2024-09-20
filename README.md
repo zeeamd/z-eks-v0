@@ -53,7 +53,7 @@ Next steps:
     * https://istio.io/latest/docs/ops/best-practices/security/
 
 # install ingress
-helm install -n istio-system istio-ingress istio-1.23.0/manifests/charts/gateways/istio-ingress
+helm install -n istio-ingress istio-ingress istio-1.23.0/manifests/charts/gateways/istio-ingress
 #
 helm uninstall -n istio-system istio-ingress
 #
@@ -128,3 +128,6 @@ helm upgrade -f values.yaml fluent-bit . --version 4 -n fb
 
 # rollout deployment
 kubectl rollout restart deployment/opentelemetry-collector -n otel
+
+# grafana setup
+https://medium.com/@sayalishewale12/setup-grafana-on-aws-ec2-instance-517d4e2bc5a2
