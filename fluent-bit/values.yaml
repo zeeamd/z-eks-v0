@@ -381,10 +381,9 @@ config:
   ## https://docs.fluentbit.io/manual/pipeline/inputs
   inputs: |
     [INPUT]
-        name opentelemetry
-        listen 0.0.0.0
-        port 4318
-        tag otel.eksv1
+        name fluentbit_metrics
+        tag  eksv1.node
+        scrape_interval 2
 
   ## https://docs.fluentbit.io/manual/pipeline/filters
   filters: |
@@ -400,9 +399,9 @@ config:
   outputs: |
     [OUTPUT]
         Name opentelemetry
-        Host lgp38977.live.dynatrace.com
+        Host  lgp38977.live.dynatrace.com
         Port  443
-        Match otel.*
+        Match eksv1.node
         Metrics_uri  /api/v2/otlp/v1/metrics
         Traces_uri  /api/v2/otlp/v1/traces
         Logs_uri   /api/v2/otlp/v1/logs

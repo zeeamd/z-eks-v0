@@ -74,3 +74,7 @@ kubectl --namespace fb port-forward $POD_NAME 2020:2020
 curl http://127.0.0.1:2020
 #
 https://github.com/isItObservable/fluentbitv2
+#
+https://github.com/isItObservable/fluentbitv3
+#
+Issue(Dynatrace) - Unsupported metric: 'node_cpu_seconds_total' - Reason: UNSUPPORTED_METRIC_TYPE_MONOTONIC_CUMULATIVE_SUM
