@@ -78,3 +78,13 @@ https://github.com/isItObservable/fluentbitv2
 https://github.com/isItObservable/fluentbitv3
 #
 Issue(Dynatrace) - Unsupported metric: 'node_cpu_seconds_total' - Reason: UNSUPPORTED_METRIC_TYPE_MONOTONIC_CUMULATIVE_SUM
+#
+https://docs.dynatrace.com/docs/dynatrace-api/environment-api/metric-v2/post-ingest-metrics
+#
+https://docs.fluentbit.io/manual/pipeline/inputs/prometheus-scrape-metrics#example
+#
+https://docs.fluentbit.io/manual/pipeline/outputs/http
+#
+https://docs.fluentbit.io/manual/pipeline/inputs/fluentbit-metrics
+#
+https://docs.fluentbit.io/manual/pipeline/outputs/prometheus-remote-write

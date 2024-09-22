@@ -368,6 +368,10 @@ luaScripts: {}
 config:
   service: |
     [SERVICE]
+        flush           1
+        log_level       info
+
+    [SERVICE]
         Daemon Off
         Flush {{ .Values.flush }}
         Log_Level {{ .Values.logLevel }}
@@ -382,8 +386,13 @@ config:
   inputs: |
     [INPUT]
         name fluentbit_metrics
-        tag  eksv1.node
+        tag  internal_metrics
         scrape_interval 2
+
+    [INPUT]
+        Name                 node_exporter_metrics
+        Tag                  internal_metrics
+        Scrape_interval      2
 
   ## https://docs.fluentbit.io/manual/pipeline/filters
   filters: |
@@ -398,18 +407,24 @@ config:
   ## https://docs.fluentbit.io/manual/pipeline/outputs
   outputs: |
     [OUTPUT]
-        Name opentelemetry
+        name stdout
+        match internal_metrics
+
+    [OUTPUT]
+        name  http
+        match internal_metrics
+        header Content-Type text/plain
+        header Authorization Api-Token dt0c01.O2D4FRTQA6ZPE5RWV5EQDQE4.GGIMRNJ6RPHO2YTLL6RC6E7NUO6LNVEMETWHQK3FOOYO6EDTM4EYWY655LQDU2KL
+        allow_duplicated_headers false
         Host  lgp38977.live.dynatrace.com
         Port  443
-        Match eksv1.node
-        Metrics_uri  /api/v2/otlp/v1/metrics
-        Traces_uri  /api/v2/otlp/v1/traces
-        Logs_uri   /api/v2/otlp/v1/logs
-        Log_response_payload True
-        Tls On
-        Tls.verify Off
-        header Authorization Api-Token dt0c01.O2D4FRTQA6ZPE5RWV5EQDQE4.GGIMRNJ6RPHO2YTLL6RC6E7NUO6LNVEMETWHQK3FOOYO6EDTM4EYWY655LQDU2KL
-        header Content-type application/x-protobuf
+        URI   /api/v2/metrics/ingest
+        Format json
+        json_date_format iso8601
+        json_date_key timestamp
+        tls On
+        tls.verify On
+        header_tag eksv1
 
   ## https://docs.fluentbit.io/manual/administration/configuring-fluent-bit/classic-mode/upstream-servers
   ## This configuration is deprecated, please use `extraFiles` instead.
