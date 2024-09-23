@@ -385,14 +385,12 @@ config:
   ## https://docs.fluentbit.io/manual/pipeline/inputs
   inputs: |
     [INPUT]
-        name fluentbit_metrics
-        tag  internal_metrics
-        scrape_interval 2
-
-    [INPUT]
-        Name                 node_exporter_metrics
-        Tag                  internal_metrics
-        Scrape_interval      2
+        name prometheus_scrape
+        host prometheus-kube-state-metrics.p.svc.cluster.local
+        port 8080
+        tag internal_metrics
+        metrics_path /metrics
+        scrape_interval 10s
 
   ## https://docs.fluentbit.io/manual/pipeline/filters
   filters: |
@@ -406,10 +404,6 @@ config:
 
   ## https://docs.fluentbit.io/manual/pipeline/outputs
   outputs: |
-    [OUTPUT]
-        name stdout
-        match internal_metrics
-
     [OUTPUT]
         name  http
         match internal_metrics
