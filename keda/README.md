@@ -401,13 +401,13 @@ cat << EOF > keda-trust-policy.json
         {
             "Effect": "Allow",
             "Principal": {
-                "Federated": "arn:aws:iam::<ACCOUNTID>:oidc-provider/{$env:OIDC_ENDPOINT#*//}"
+                "Federated": "arn:aws:iam::ACCOUNTID:oidc-provider/{$env:OIDC_ENDPOINT#*//}"
             },
             "Action": "sts:AssumeRoleWithWebIdentity",
             "Condition": {
                 "StringEquals": {
                     "${OIDC_ENDPOINT#*//}:aud": "sts.amazonaws.com",
-                    "${OIDC_ENDPOINT#*//}:sub": "system:serviceaccount:<NS>:keda-operator"
+                    "${OIDC_ENDPOINT#*//}:sub": "system:serviceaccount:NS:keda-operator"
                 }
             }
         }
@@ -423,13 +423,13 @@ cat << EOF > keda-policy.json
         {
             "Effect": "Allow",
             "Action": "iam:PassRole",
-            "Resource": "arn:aws:iam::<ACCOUNTID>:role/keda-operator",
+            "Resource": "arn:aws:iam::ACCOUNTID:role/keda-operator",
             "Sid": "PassKedaIAMRole"
         },
         {
             "Effect": "Allow",
             "Action": "eks:DescribeCluster",
-            "Resource": "arn:aws:eks:us-east-2:<ACCOUNTID>:cluster/<CLUSTERNM>",
+            "Resource": "arn:aws:eks:us-east-2:ACCOUNTID:cluster/CLUSTERNM",
             "Sid": "EKSClusterEndpointLookup"
         }
     ],
