@@ -134,3 +134,9 @@ https://medium.com/@sayalishewale12/setup-grafana-on-aws-ec2-instance-517d4e2bc5
 
 # prometheus setup
 https://www.cherryservers.com/blog/install-prometheus-ubuntu
+#
+cluster domain
+
+kubectl get cm coredns -n kube-system -o jsonpath="{.data.Corefile}"
+#
+
