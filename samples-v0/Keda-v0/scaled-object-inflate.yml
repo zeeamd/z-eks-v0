@@ -10,7 +10,7 @@ spec:
     # authenticationRef:
     #   name: keda-trigger-auth-aws-credentials
     metadata:
-      queueURL: keda-trigger-test-v0
+      queueURL: test
       queueLength: '1'
       awsRegion: 'us-east-1'
       scaleOnInFlight: 'false'
