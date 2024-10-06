@@ -16,7 +16,7 @@ spec:
       memory: 400Mi
   enableAdminAPI: false
   remoteWrite:
-  - url: "192.168.251.76:3000"
+  - url: "https://prometheus-prod-13-prod-us-east-0.grafana.net/api/prom/push"
     basicAuth:
       username:
         name: kubepromsecret

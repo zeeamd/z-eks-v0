@@ -9,7 +9,9 @@ https://prometheus-operator.dev/docs/developer/getting-started/
 #
 https://observability.thomasriley.co.uk/prometheus/configuring-prometheus/using-service-monitors/
 #
+https://prometheus-prod-13-prod-us-east-0.grafana.net/api/prom/push
+#
 kubectl create secret generic kubepromsecret \
-  --from-literal=username=admin\
- --from-literal=password=admin\
+  --from-literal=username=1829879\
+ --from-literal=password=token\
  -n po
