@@ -1,7 +1,7 @@
 apiVersion: keda.sh/v1alpha1
 kind: ScaledObject
 metadata:
-  name: aws-sqs-queue-scaledobject-inflate
+  name: so-nginx-cpu
 spec:
   scaleTargetRef:
     name: nginx-deployment

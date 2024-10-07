@@ -8,6 +8,10 @@ metadata:
   namespace: po
 spec:
   serviceAccountName: prometheus
+  serviceMonitorNamespaceSelector:
+    matchLabels:
+      name: po
+      name: default
   serviceMonitorSelector:
     matchLabels:
       team: frontend
