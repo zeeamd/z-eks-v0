@@ -1,0 +1,24 @@
+#pod monitor selector
+apiVersion: monitoring.coreos.com/v1
+kind: Prometheus
+metadata:
+  name: prometheus
+  namespace: po
+spec:
+  serviceAccountName: prometheus
+  podMonitorSelector:
+    matchLabels:
+      app.kubernetes.io/name: prometheus-example-app
+  resources:
+    requests:
+      memory: 400Mi
+  enableAdminAPI: false
+  remoteWrite:
+  - url: "https://prometheus-prod-13-prod-us-east-0.grafana.net/api/prom/push"
+    basicAuth:
+      username:
+        name: kubepromsecret
+        key: username
+      password:
+        name: kubepromsecret
+        key: password

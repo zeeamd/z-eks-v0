@@ -368,10 +368,6 @@ luaScripts: {}
 config:
   service: |
     [SERVICE]
-        flush           1
-        log_level       info
-
-    [SERVICE]
         Daemon Off
         Flush {{ .Values.flush }}
         Log_Level {{ .Values.logLevel }}
@@ -385,12 +381,18 @@ config:
   ## https://docs.fluentbit.io/manual/pipeline/inputs
   inputs: |
     [INPUT]
-        name prometheus_scrape
-        host prometheus-kube-state-metrics.p.svc.cluster.local
-        port 8080
-        tag internal_metrics
-        metrics_path /metrics
-        scrape_interval 10s
+        Name tail
+        Path /var/log/containers/*.log
+        multiline.parser docker, cri
+        Tag kube.*
+        Mem_Buf_Limit 5MB
+        Skip_Long_Lines On
+
+    [INPUT]
+        Name systemd
+        Tag host.*
+        Systemd_Filter _SYSTEMD_UNIT=kubelet.service
+        Read_From_Tail On
 
   ## https://docs.fluentbit.io/manual/pipeline/filters
   filters: |
@@ -402,23 +404,16 @@ config:
         K8S-Logging.Parser On
         K8S-Logging.Exclude On
 
+    [FILTER]
+        Name modify
+        Match kube.*
+        Add cluster_name filterv0
+
   ## https://docs.fluentbit.io/manual/pipeline/outputs
   outputs: |
     [OUTPUT]
-        name  http
-        match internal_metrics
-        header Content-Type text/plain
-        header Authorization Api-Token dt0c01.O2D4FRTQA6ZPE5RWV5EQDQE4.GGIMRNJ6RPHO2YTLL6RC6E7NUO6LNVEMETWHQK3FOOYO6EDTM4EYWY655LQDU2KL
-        allow_duplicated_headers false
-        Host  lgp38977.live.dynatrace.com
-        Port  443
-        URI   /api/v2/metrics/ingest
-        Format json
-        json_date_format iso8601
-        json_date_key timestamp
-        tls On
-        tls.verify On
-        header_tag eksv1
+        Name stdout
+        Match kube.*
 
   ## https://docs.fluentbit.io/manual/administration/configuring-fluent-bit/classic-mode/upstream-servers
   ## This configuration is deprecated, please use `extraFiles` instead.
