@@ -90,3 +90,5 @@ https://docs.fluentbit.io/manual/pipeline/inputs/fluentbit-metrics
 https://docs.fluentbit.io/manual/pipeline/outputs/prometheus-remote-write
 #
 https://github.com/fluent/fluent-bit/issues/5541
+#
+https://docs.fluentbit.io/manual/pipeline/filters/kubernetes#configuration-parameters
