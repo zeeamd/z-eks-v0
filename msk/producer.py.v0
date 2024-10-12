@@ -20,11 +20,17 @@ kp = KafkaProducer(security_protocol='SASL_SSL',
                    sasl_oauth_token_provider=tp
                    )
 
-try:
-    kp.send('zt0',json.dumps(msg).encode('utf-8'))
-    kp.flush()
-    print('Produced!')
-except Exception:
-    print('Failed to send message:', e)
+c = 1
+#while True:
+while c<2:
+    try:
+        #inp=input(">")
+        #kp.send("zt0", inp.encode())
+        kp.send('zt0',json.dumps(msg).encode('utf-8'))
+        kp.flush()
+        print('Produced!')
+        c = c+1
+    except Exception:
+        print('Failed to send message:', e)
 
 kp.close()
