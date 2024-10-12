@@ -69,3 +69,7 @@ kafka/bin/offsetfile.json (needed to clear topic cli)
 kafka_2.12-3.7.1
 #
 https://github.com/dpkp/kafka-python
+#
+Python 3.8.12
+#
+pip 24.2 from /usr/local/lib/python3.8/site-packages/pip (python 3.8)
