@@ -5,7 +5,8 @@ from aws_msk_iam_sasl_signer import MSKAuthTokenProvider
 
 r = 'us-east-1'
 bs = ['boot-9vnhxufq.c1.kafka-serverless.us-east-1.amazonaws.com:9098']
-msg = {"k0": "v0"}
+t = 'zt0'
+file = 'data'
 
 class MSKTokenProvider():
     def token(self):
@@ -21,9 +22,10 @@ kp = KafkaProducer(security_protocol='SASL_SSL',
                    )
 
 try:
-    kp.send('zt0',json.dumps(msg).encode('utf-8'))
-    kp.flush()
-    print('Produced!')
+    with open(file) as f:
+        for l in f:
+            kp.send(t,json.dumps(l.strip()).encode('utf-8'))
+            #kp.send(t,json.dumps(l).encode('utf-8'))
 except Exception:
     print('Failed to send message:', e)
 

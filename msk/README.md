@@ -58,11 +58,12 @@ pip install aws-msk-iam-sasl-signer-python -t .
 #
 https://github.com/aws/aws-msk-iam-sasl-signer-python?tab=readme-ov-file#get-started
 #
-./kafka-delete-records.sh --bootstrap-server boot-9vnhxufq.c1.kafka-serverless.us-east-1.amazonaws.com:90
-98 --offset-json-file ./offsetfile.json
+./kafka-delete-records.sh --bootstrap-server boot-9vnhxufq.c1.kafka-serverless.us-east-1.amazonaws.com:9098 --offset-json-file ./offsetfile.json
 #
 kafka/libs/aws-msk-iam-auth-1.1.1-all.jar (needed for connection cli)
 #
 kafka/bin/client.properties (needed for connection cli)
 #
 kafka/bin/offsetfile.json (needed to clear topic cli)
+#
+kafka_2.12-3.7.1
