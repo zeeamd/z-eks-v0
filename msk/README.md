@@ -30,3 +30,31 @@ https://docs.aws.amazon.com/msk/latest/developerguide/create-topic.html
 #
 ./kafka-console-consumer.sh --bootstrap-server boot-9vnhxufq.c1.kafka-serverless.us-east-1.amazonaws.com:9098 --consumer.config client.properties --topic zt0 --from-beginning
 #
+python -m venv .venv (in project dir)
+#
+source .venv/bin/activate
+#
+python --version
+#
+deactivate
+#
+pip install confluent_kafka -t .
+#
+wget https://www.python.org/ftp/python/3.8.12/Python-3.8.12.tgz
+#
+cd Python-3.8.12
+#
+./configure --enable-optimizations
+#
+make install
+#
+curl -O https://bootstrap.pypa.io/get-pip.py
+#
+python get-pip.py
+#
+https://docs.aws.amazon.com/elasticbeanstalk/latest/dg/eb-cli3-install-linux.html
+#
+pip install aws-msk-iam-sasl-signer-python -t .
+#
+https://github.com/aws/aws-msk-iam-sasl-signer-python?tab=readme-ov-file#get-started
+
