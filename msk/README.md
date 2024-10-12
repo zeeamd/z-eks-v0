@@ -38,7 +38,7 @@ python --version
 #
 deactivate
 #
-pip install confluent_kafka -t .
+pip install kafka-python -t .
 #
 wget https://www.python.org/ftp/python/3.8.12/Python-3.8.12.tgz
 #
@@ -67,3 +67,5 @@ kafka/bin/client.properties (needed for connection cli)
 kafka/bin/offsetfile.json (needed to clear topic cli)
 #
 kafka_2.12-3.7.1
+#
+https://github.com/dpkp/kafka-python
