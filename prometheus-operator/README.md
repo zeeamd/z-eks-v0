@@ -17,3 +17,7 @@ kubectl create secret generic kubepromsecret \
   --from-literal=username=1829879\
  --from-literal=password=token\
  -n po
+#
+kubectl run --rm utils -it --image arunvelsriram/utils bash -n po
+#
+https://github.com/arunvelsriram/utils
