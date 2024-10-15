@@ -1,0 +1,15 @@
+apiVersion: keda.sh/v1alpha1
+kind: TriggerAuthentication
+metadata:
+  name: keda-trigger-auth-kafka-credential
+spec:
+  secretTargetRef:
+  - parameter: sasl
+    name: keda-kafka-secret
+    key: sasl
+  - parameter: tls
+    name: keda-kafka-secret
+    key: tls
+  - parameter: awsRoleArn
+    name: keda-kafka-secret
+    key: awsRoleArn
