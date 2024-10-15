@@ -1,0 +1,19 @@
+apiVersion: keda.sh/v1alpha1
+kind: ScaledObject
+metadata:
+  name: aws-msk-topic-scaledobject-inflate
+spec:
+  scaleTargetRef:
+    name: inflate-deployment
+  triggers:
+  - type: apache-kafka
+    authenticationRef:
+      name: keda-trigger-auth-kafka-credential
+    metadata:
+      bootstrapServers: boot-9vnhxufq.c1.kafka-serverless.us-east-1.amazonaws.com:9098
+      consumerGroup: console-consumer-85843
+      topic: zt1
+      awsRegion: us-east-1
+      # Optional
+      lagThreshold: "1"
+      offsetResetPolicy: latest

@@ -75,3 +75,8 @@ Python 3.8.12
 pip 24.2 from /usr/local/lib/python3.8/site-packages/pip (python 3.8)
 #
 ./kafka-topics.sh --create --bootstrap-server boot-9vnhxufq.c1.kafka-serverless.us-east-1.amazonaws.com:9098 --command-config client.properties --replication-factor 1 --partitions 1 --config retention.ms=60000 --topic zt1
+#
+./kafka-consumer-groups.sh  --list --bootstrap-server boot-9vnhxufq.c1.kafka-serverless.us-east-1.amazonaws.com:9098 --command-config client.properties
+#
+console-consumer-85843
+#
