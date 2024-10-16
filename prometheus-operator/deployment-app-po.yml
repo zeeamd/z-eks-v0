@@ -4,7 +4,7 @@ metadata:
   name: example-app
   namespace: po
 spec:
-  replicas: 3
+  replicas: 1
   selector:
     matchLabels:
       app: example-app

@@ -10,8 +10,7 @@ spec:
   serviceAccountName: prometheus
   serviceMonitorNamespaceSelector:
     matchLabels:
-      name: po
-      name: default
+      kubernetes.io/metadata.name: po
   serviceMonitorSelector:
     matchLabels:
       team: frontend
