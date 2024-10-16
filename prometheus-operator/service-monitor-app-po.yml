@@ -11,7 +11,7 @@ spec:
       app: example-app
   endpoints:
   - interval: 30s
-    port: "8080"
+    port: web
     path: /metrics
   namespaceSelector:
     matchNames:
