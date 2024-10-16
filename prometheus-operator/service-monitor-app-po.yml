@@ -10,4 +10,9 @@ spec:
     matchLabels:
       app: example-app
   endpoints:
-  - port: web
+  - interval: 30s
+    port: "8080"
+    path: /metrics
+  namespaceSelector:
+    matchNames:
+    - po
