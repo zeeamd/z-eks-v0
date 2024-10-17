@@ -394,6 +394,11 @@ config:
         Systemd_Filter _SYSTEMD_UNIT=kubelet.service
         Read_From_Tail On
 
+    [INPUT]
+        name            node_exporter_metrics
+        tag             node_metrics
+        scrape_interval 2
+
   ## https://docs.fluentbit.io/manual/pipeline/filters
   filters: |
     [FILTER]
@@ -413,7 +418,7 @@ config:
   outputs: |
     [OUTPUT]
         Name stdout
-        Match kube.*
+        Match node_metrics
 
   ## https://docs.fluentbit.io/manual/administration/configuring-fluent-bit/classic-mode/upstream-servers
   ## This configuration is deprecated, please use `extraFiles` instead.
