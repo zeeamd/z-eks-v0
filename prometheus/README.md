@@ -387,3 +387,21 @@ https://archive.eksworkshop.com/intermediate/240_monitoring/deploy-prometheus/
 helm install prometheus . --namespace p
 #
 prometheus-server.p.svc.cluster.local 80
+#
+install kube-state-metrics chart to collect k8s metrics only
+#
+NAME: kube-state-metrics
+NAMESPACE: p
+STATUS: deployed
+REVISION: 1
+TEST SUITE: None
+NOTES:
+kube-state-metrics is a simple service that listens to the Kubernetes API server and generates metrics about the state of the objects.
+The exposed metrics can be found here:
+https://github.com/kubernetes/kube-state-metrics/blob/master/docs/README.md#exposed-metrics
+
+The metrics are exported on the HTTP endpoint /metrics on the listening port.
+In your case, kube-state-metrics.p.svc.cluster.local:8080/metrics
+
+They are served either as plaintext or protobuf depending on the Accept header.
+They are designed to be consumed either by Prometheus itself or by a scraper that is compatible with scraping a Prometheus client endpoint
