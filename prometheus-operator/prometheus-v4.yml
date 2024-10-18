@@ -1,0 +1,32 @@
+#This is standalone prometheus instance
+#Can define as many needed as per standard
+#By default Prometheus will only pick up ServiceMonitors from the current namespace
+apiVersion: monitoring.coreos.com/v1
+kind: Prometheus
+metadata:
+  name: prometheus
+  namespace: po
+spec:
+  serviceAccountName: prometheus
+  serviceMonitorNamespaceSelector:
+    matchLabels:
+      kubernetes.io/metadata.name: po
+  serviceMonitorSelector:
+    matchLabels:
+      team: frontend
+  resources:
+    requests:
+      memory: 400Mi
+  enableAdminAPI: false
+  remoteWrite:
+  - url: "https://prometheus-prod-13-prod-us-east-0.grafana.net/api/prom/push"
+    basicAuth:
+      username:
+        name: kubepromsecret
+        key: username
+      password:
+        name: kubepromsecret
+        key: password
+  additionalScrapeConfigs:
+    name: additional-scrape-configs
+    key: prometheus-additional.yaml

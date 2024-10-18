@@ -21,3 +21,11 @@ kubectl create secret generic kubepromsecret \
 kubectl run --rm utils -it --image arunvelsriram/utils bash -n po
 #
 https://github.com/arunvelsriram/utils
+#
+https://github.com/prometheus-operator/prometheus-operator/blob/main/Documentation/additional-scrape-config.md
+#
+https://github.com/prometheus-operator/prometheus-operator/blob/main/Documentation/api.md#monitoring.coreos.com/v1.PrometheusSpec
+#
+https://prometheus.io/docs/prometheus/latest/feature_flags/
+#
+https://sysdig.com/blog/kubernetes-monitoring-prometheus/
