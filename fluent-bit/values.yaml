@@ -417,8 +417,15 @@ config:
   ## https://docs.fluentbit.io/manual/pipeline/outputs
   outputs: |
     [OUTPUT]
-        Name stdout
-        Match node_metrics
+        name prometheus_remote_write
+        host prometheus-prod-13-prod-us-east-0.grafana.net
+        match node_metrics
+        uri /api/prom/push
+        port 443
+        tls on
+        tls.verify on
+        http_user 1829879
+        http_passwd xxxxxxxxx
 
   ## https://docs.fluentbit.io/manual/administration/configuring-fluent-bit/classic-mode/upstream-servers
   ## This configuration is deprecated, please use `extraFiles` instead.
