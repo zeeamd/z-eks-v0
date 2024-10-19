@@ -29,3 +29,7 @@ https://github.com/prometheus-operator/prometheus-operator/blob/main/Documentati
 https://prometheus.io/docs/prometheus/latest/feature_flags/
 #
 https://sysdig.com/blog/kubernetes-monitoring-prometheus/
+#
+TOKEN=$(kubectl get secret prom-api-user-secret -n po -o jsonpath='{.data.token}' | base64 --decode)
+#
+https://devopscube.com/setup-prometheus-monitoring-on-kubernetes/

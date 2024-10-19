@@ -10,6 +10,8 @@ spec:
       app: example-app
   template:
     metadata:
+      annotations:
+        prometheus.io/scrape: "true"
       labels:
         app: example-app
     spec:
