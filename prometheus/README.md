@@ -382,26 +382,11 @@ To enable network policy for Prometheus, install a networking plugin that implem
 If NetworkPolicy is enabled for Prometheus' scrape targets, you may also need to manually create a networkpolicy which allows it.
 
 #
-https://archive.eksworkshop.com/intermediate/240_monitoring/deploy-prometheus/
+Warning  FailedScheduling  98s   default-scheduler  0/1 nodes are available: pod has unbound immediate PersistentVolumeClaims. preemption: 0/1 nodes are available: 1 Preemption is not helpful for scheduling
 #
-helm install prometheus . --namespace p
+same issue happens on both prometheus server & alert manager pods
+solution at https://github.com/prometheus-community/helm-charts/issues/4040
 #
-prometheus-server.p.svc.cluster.local 80
+kubectl get pvc prometheus-server -n p -o yaml > prometheus-server-pvc.yml
 #
-install kube-state-metrics chart to collect k8s metrics only
-#
-NAME: kube-state-metrics
-NAMESPACE: p
-STATUS: deployed
-REVISION: 1
-TEST SUITE: None
-NOTES:
-kube-state-metrics is a simple service that listens to the Kubernetes API server and generates metrics about the state of the objects.
-The exposed metrics can be found here:
-https://github.com/kubernetes/kube-state-metrics/blob/master/docs/README.md#exposed-metrics
-
-The metrics are exported on the HTTP endpoint /metrics on the listening port.
-In your case, kube-state-metrics.p.svc.cluster.local:8080/metrics
-
-They are served either as plaintext or protobuf depending on the Accept header.
-They are designed to be consumed either by Prometheus itself or by a scraper that is compatible with scraping a Prometheus client endpoint
+alert manager pvc has same issues

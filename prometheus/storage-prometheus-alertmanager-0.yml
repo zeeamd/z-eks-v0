@@ -1,0 +1,21 @@
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  creationTimestamp: "2024-10-20T08:56:31Z"
+  finalizers:
+  - kubernetes.io/pvc-protection
+  labels:
+    app.kubernetes.io/instance: prometheus
+    app.kubernetes.io/name: alertmanager
+  name: storage-prometheus-alertmanager-0
+  namespace: p
+  resourceVersion: "10642672"
+  uid: 866b0c5a-f5e0-4ef8-b58e-bdf31616c653
+spec:
+  accessModes:
+  - ReadWriteOnce
+  resources:
+    requests:
+      storage: 2Gi
+  volumeMode: Filesystem
+  storageClassName: openebs-hostpath
