@@ -390,3 +390,8 @@ solution at https://github.com/prometheus-community/helm-charts/issues/4040
 kubectl get pvc prometheus-server -n p -o yaml > prometheus-server-pvc.yml
 #
 alert manager pvc has same issues
+#
+https://medium.com/@kedarnath93/central-prometheus-cluster-with-an-example-dff49e7abd11
+#
+https://grafana.com/docs/grafana-cloud/monitor-infrastructure/kubernetes-monitoring/configuration/config-other-methods/prometheus/remote-write-helm-operator/
+#

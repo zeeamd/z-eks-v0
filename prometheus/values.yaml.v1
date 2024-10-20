@@ -3,19 +3,6 @@
 # This is a YAML-formatted file.
 # Declare variables to be passed into your templates.
 
-# remote write test
-prometheus:
-  prometheusSpec:
-    remoteWrite:
-    - url: "https://prometheus-prod-13-prod-us-east-0.grafana.net/api/prom/push"
-      basicAuth:
-          username:
-            name: kubepromsecret
-            key: username
-          password:
-            name: kubepromsecret
-            key: password
-
 rbac:
   create: true
 
