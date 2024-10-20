@@ -8,11 +8,11 @@ metadata:
 spec:
   selector:
     matchLabels:
-      name: prometheus-server
+      app.kubernetes.io/name: prometheus
   endpoints:
   - interval: 30s
     port: http
     path: /metrics
   namespaceSelector:
     matchNames:
-    - po
+    - p
